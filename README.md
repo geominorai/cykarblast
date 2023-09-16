@@ -1,6 +1,6 @@
 # TF2 Road Rager Taunt Bullets 
 
-**Cykarblast** is a server-side SourceMod plugin for Team Fortress 2 that allows a Heavy taunting with the [Road Rager](https://wiki.teamfortress.com/wiki/Road_Rager) to blast bullets out of the car's turret.
+**Cykar Blast** is a server-side SourceMod plugin for Team Fortress 2 that allows a Heavy taunting with the [Road Rager](https://wiki.teamfortress.com/wiki/Road_Rager) to blast bullets out of the car's turret.
 
 Damage, bullet spread, and crit chances are configurable.  Friendly fire via `mp_friendlyfire` is also supported.
 
