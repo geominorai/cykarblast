@@ -36,9 +36,9 @@ Blast g_eBlast[MAXPLAYERS+1];
 
 public void OnPluginStart() {
 	CreateConVar("sm_cykarblast_version", PLUGIN_VERSION, "Cykar Blast version -- Do not modify", FCVAR_NOTIFY | FCVAR_DONTRECORD);
-	g_hCVBulletSpread = CreateConVar("sm_cykarblast_bullet_spread", "0.04", "Bullet base spread", FCVAR_NONE, true, 0.0, true, 1.0);
+	g_hCVBulletSpread = CreateConVar("sm_cykarblast_bullet_spread", "0.04", "Bullet spread", FCVAR_NONE, true, 0.0, true, 1.0);
 	g_hCVBulletDamage = CreateConVar("sm_cykarblast_bullet_damage", "15.0", "Bullet base damage", FCVAR_NONE, true, 0.0, false);
-	g_hCVCritChance = CreateConVar("sm_cykarblast_crit_chance", "0.04", "Bullet critical change", FCVAR_NONE, true, 0.0, true, 1.0);
+	g_hCVCritChance = CreateConVar("sm_cykarblast_crit_chance", "0.04", "Bullet critical chance", FCVAR_NONE, true, 0.0, true, 1.0);
 
 	g_hCVFriendlyFire = FindConVar("mp_friendlyfire");
 
