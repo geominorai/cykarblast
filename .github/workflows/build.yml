@@ -1,0 +1,72 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    - name: Setup SourcePawn compiler 1.12
+      uses: rumblefrog/setup-sp@master
+      with:
+        version: '1.12.x'
+
+    - name: Create external dependency directories
+      run: |
+        mkdir includes
+
+    - name: Fetch smlib dependency
+      uses: actions/checkout@v3
+      with:
+        repository: bcserv/smlib
+        ref: transitional_syntax
+        path: smlib
+
+    - name: Copy smlib to dependency directory
+      run: cp -r smlib/scripting/include/* includes
+
+    - name: Move dependency directory into scripting
+      run: mv includes scripting
+
+    - name: Create plugins folder
+      run: mkdir plugins
+
+    - name: Build plugins
+      working-directory: ./scripting
+      run: |
+        spcomp -iincludes cykarblast.sp -o ../plugins/cykarblast.smx
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+          name: cykarblast-plugin
+          path: plugins/
+
+    - name: Remove external dependency directory
+      run: rm -r scripting/includes
+
+    - name: Prepare release bundles
+      if: github.ref == 'refs/heads/master'
+      run: |
+        zip -r cykarblast-bundle.zip LICENSE plugins scripting
+        tar -czf cykarblast-bundle.tar.gz LICENSE plugins scripting
+
+    - name: "Release development build"
+      if: github.ref == 'refs/heads/master'
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: |
+          cykarblast-bundle.zip
+          cykarblast-bundle.tar.gz
